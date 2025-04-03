@@ -13,10 +13,11 @@ struct SettingsView: View {
     "AppIcon-MagnifyingGlass",
     "AppIcon-Map",
     "AppIcon-Mushroom",
-    "AppIcon-Camera",
-    "AppIcon-Backpack",
-    "AppIcon-Campfire"
+    "AppIcon-Camera"
+  
   ]
+    
+    @State var appController = AppController()
   
   var body: some View {
     List {
@@ -76,7 +77,23 @@ struct SettingsView: View {
       
       // MARK: - SECTION: ICONS
       
+      
+        
       Section(header: Text("Alternate Icons")) {
+          Button {
+              appController.showAditionalIcon { iconName in
+                  alternateAppIcons.append(iconName)
+              }
+              
+              
+          } label: {
+              Text("Update Icon from BFF")
+        
+                  .foregroundStyle(Color.customGreenDark)
+              
+                  
+          }
+
         ScrollView(.horizontal, showsIndicators: false) {
           HStack(spacing: 12) {
             ForEach(alternateAppIcons.indices, id: \.self) { item in
@@ -143,6 +160,10 @@ struct SettingsView: View {
         CustomListRowView(rowLabel: "Website", rowIcon: "globe", rowTintColor: .indigo, rowLinkLabel: "Credo Acedemy", rowLinkDestination: "https://credo.academy")
         
       } //: SECTION
+    }.onAppear {
+        appController.getInitialConfig { iconName in
+            UIApplication.shared.setAlternateIconName(iconName)
+        }
     } //: LIST
   }
 }

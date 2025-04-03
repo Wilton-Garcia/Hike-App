@@ -47,7 +47,7 @@ class NetworkManager {
         body: Data? = nil,
         completion: @escaping (Result<T, NetworkError>) -> Void
     ) {
-        guard let url = URL(string: "\(apiURL.apiary) \(endoint.rawValue)") else {
+        guard let url = URL(string: "\(apiURL.apiary)\(endoint.rawValue)") else {
             completion(.failure(.invalidURL))
             return
         }
@@ -96,7 +96,7 @@ class NetworkManager {
     func get<T: Decodable>(
         endoint: NetworkEndpoint,
         completion: @escaping (Result<T, NetworkError>) -> Void
-    )
+    ) {
         request(endoint: endoint, method: .get, completion: completion)
     }
     
